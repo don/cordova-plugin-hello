@@ -1,6 +1,7 @@
 # Sample Hello World Plugin for PhoneGap Day 2012 talk
 
 PhoneGap Day US 2012 - http://pgday.phonegap.com/us2012/
+
 PhoneGap Plugins - http://don.github.com/phonegap-plugins
 
 # Install
@@ -37,7 +38,6 @@ Include the Javascript file in you HTML
 
 Add some Javascript to index.html or main.js to call the plugin
 
-	@@@ javascript
 	var hello = cordova.require('cordova/plugin/hello');
 	
 	var	win = function (result) {
