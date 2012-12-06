@@ -1,34 +1,27 @@
 package com.example.plugin;
 
-import org.apache.cordova.api.Plugin;
-import org.apache.cordova.api.PluginResult;
-import org.apache.cordova.api.PluginResult.Status;
+import org.apache.cordova.api.CallbackContext;
+import org.apache.cordova.api.CordovaPlugin;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-public class Hello extends Plugin {
+public class Hello extends CordovaPlugin {
 
     @Override
-    public PluginResult execute(String action, JSONArray args, String callbackId) {
-        
+    public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
+
         if (action.equals("greet")) {
 
-            try {
-                String name = args.getString(0);
-                String message = "Hello, " + name;
+            String name = data.getString(0);
+            String message = "Hello, " + name;
+            callbackContext.success(message);
 
-                return new PluginResult(Status.OK, message);
-
-            } catch (JSONException e) {
-
-                return new PluginResult(Status.JSON_EXCEPTION);
-            }
+            return true;
 
         } else {
             
-            return new PluginResult(Status.INVALID_ACTION);
-            
+            return false;
+
         }
     }
 }

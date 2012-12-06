@@ -4,7 +4,7 @@ cordova.define("cordova/plugin/hello",
 
         var exec = cordova.require('cordova/exec');
 
-        function hello(name, win, fail) {
+        function greet(name, win, fail) {
             exec(win, fail, "Hello", "greet", [name]);
         }
 

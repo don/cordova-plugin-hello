@@ -1,19 +1,19 @@
-#import "hello.h" 
+#import "HWPHello.h"
 
-@implementation Hello 
+@implementation HWPHello
 
-- (void)greet:(NSMutableArray*)args withDict:(NSMutableDictionary*)opts
+- (void)greet:(CDVInvokedUrlCommand*)command
 {
-    NSString* callbackId = [args objectAtIndex:0];
-    
-	NSString* name = [args objectAtIndex:1];
-	NSString* msg = [NSString stringWithFormat: @"Hello, %@", name];
-    
-	CDVPluginResult* result = [CDVPluginResult
+
+    NSString* callbackId = [command callbackId];
+    NSString* name = [[command arguments] objectAtIndex:0];
+    NSString* msg = [NSString stringWithFormat: @"Hello, %@", name];
+
+    CDVPluginResult* result = [CDVPluginResult
                                resultWithStatus:CDVCommandStatus_OK
                                messageAsString:msg];
-    
-	[super success:result callbackId:callbackId];
+
+    [self success:result callbackId:callbackId];
 }
 
 @end

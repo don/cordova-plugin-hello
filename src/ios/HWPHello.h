@@ -2,6 +2,6 @@
 
 @interface HWPHello : CDVPlugin
 
-- (void) greet:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void) greet:(CDVInvokedUrlCommand*)command;
 
 @end
