@@ -8,7 +8,21 @@ PhoneGap Plugins - http://don.github.com/phonegap-plugins
 
 # Install
 
+## pluginstall
+
+Android and iOS can be installed with [pluginstall](https://github.com/alunny/pluginstall) 
+
+Pluginstall requires [node.js](http://nodejs.org) and is installed through [npm](https://npmjs.org).  If you're on a mac and use homebrew, install node and npm with `brew install node`.
+
+    $ npm install -g pluginstall
+
 ## iOS
+
+### pluginstall
+
+    $ pluginstall ios /path/to/project /path/to/cordova-plugin-hello
+
+### Manual Install
 
 Copy HWPHello.h and HWPHello.m into the Plugins directory
 
@@ -17,6 +31,12 @@ Copy hello.js into the www/js folder
 Edit Cordova.plist and map Hello to HWPHello in the plugins section
 
 ## Android
+
+### pluginstall
+
+    $ pluginstall android /path/to/project /path/to/cordova-plugin-hello
+
+### Manual Install
 
 Copy Hello.java to src/com/examlple/plugins/Hello.java
 
@@ -50,7 +70,3 @@ Add some Javascript to index.html or index.js to call the plugin
 		};
 
 	hello.greet("World", win, fail);
-
-# pluginstall
-
-You can try installing this plugin with [pluginstall](https://github.com/alunny/pluginstall) for Android and iOS.
