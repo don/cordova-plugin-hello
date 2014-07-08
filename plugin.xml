@@ -1,34 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    id="com.example.hello"
-    version="0.6.0">
-        
-	<name>Hello</name>
-	<asset src="www/hello.js" target="js/hello.js" />
-	
-	<platform name="android">
-		<!-- 1.9 
-		<config-file target="res/xml/plugins.xml" parent="/plugins">
-		  <plugin name="Hello" value="com.example.plugin.Hello"/>
-		</config-file>
-        --> 
+        id="com.example.hello"
+        version="0.6.0">
 
-		<config-file target="res/xml/config.xml" parent="/cordova/plugins">
-		  <plugin name="Hello" value="com.example.plugin.Hello"/>
-		</config-file>
-		        
-		<source-file src="src/android/Hello.java" target-dir="src/com/example/plugin/" />			
-    </platform>
-    
-    <platform name="ios">
-        <plugins-plist key="Hello" string="HWPHello" />			
-	    <header-file src="HWPHello.h" />	
-	    <source-file src="HWPHello.m" />	
-    </platform>	
-    
-    <platform name="wp7"> <!-- not supported for pluginstall (yet)-->
-		<source-file src="src/wp7/Hello.cs" />
-    </platform>
+  <name>Hello</name>
+
+  <engines>
+    <engine name="cordova" version=">=3.4.0"/>
+  </engines>
+
+  <asset src="www/hello.js" target="js/hello.js"/>
+
+  <js-module src="www/hello.js" name="hello">
+    <clobbers target="hello" />
+  </js-module>
+
+  <platform name="android">
+    <!-- 1.9
+    <config-file target="res/xml/plugins.xml" parent="/plugins">
+      <plugin name="Hello" value="com.example.plugin.Hello"/>
+    </config-file>
+    -->
+
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="Hello">
+        <param name="android-package" value="com.example.plugin.Hello"/>
+      </feature>
+    </config-file>
+
+    <source-file src="src/android/Hello.java" target-dir="src/com/example/plugin/"/>
+  </platform>
+
+  <platform name="ios">
+    <plugins-plist key="Hello" string="HWPHello"/>
+    <header-file src="HWPHello.h"/>
+    <source-file src="HWPHello.m"/>
+  </platform>
+
+  <platform name="wp7"> <!-- not supported for pluginstall (yet)-->
+    <source-file src="src/wp7/Hello.cs"/>
+  </platform>
 
 </plugin>
