@@ -60,7 +60,7 @@ Include the Javascript file in you HTML
 
 Add some Javascript to index.html or index.js to call the plugin
 
-	var hello = cordova.require('cordova/plugin/hello');
+	var hello = cordova.hello;
 	
 	var	win = function (result) {
 			alert(result);		
