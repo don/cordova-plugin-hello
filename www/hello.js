@@ -1,15 +1,11 @@
 /*global cordova*/
-cordova.define("cordova/plugin/hello",
-    function (require, exports, module) {
 
-        var exec = cordova.require('cordova/exec');
+var exec = require("cordova/exec");
 
-        function greet(name, win, fail) {
-            exec(win, fail, "Hello", "greet", [name]);
-        }
+var Hello = function(){};
 
-        module.exports = {
-            greet: greet
-        }
-    }
-);
+Hello.prototype.greet = function (name, successCallback, errorCallback) {
+    cordova.exec(successCallback, errorCallback, "Hello", "greet", [name]);
+};
+
+module.exports = new Hello();
