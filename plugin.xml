@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         id="com.example.hello"
-        version="0.6.0">
+        version="0.7.0">
 
   <name>Hello</name>
 
@@ -16,11 +16,6 @@
   </js-module>
 
   <platform name="android">
-    <!-- 1.9
-    <config-file target="res/xml/plugins.xml" parent="/plugins">
-      <plugin name="Hello" value="com.example.plugin.Hello"/>
-    </config-file>
-    -->
 
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="Hello">
@@ -32,12 +27,18 @@
   </platform>
 
   <platform name="ios">
-    <plugins-plist key="Hello" string="HWPHello"/>
-    <header-file src="HWPHello.h"/>
-    <source-file src="HWPHello.m"/>
+    
+    <config-file target="config.xml" parent="/widget">
+      <feature name="Hello">
+        <param name="ios-package" value="HWPHello" />
+      </feature>
+    </config-file>
+
+    <header-file src="src/ios/HWPHello.h" target-dir="HelloPlugin"/>
+    <source-file src="src/ios/HWPHello.m" target-dir="HelloPlugin"/>
   </platform>
 
-  <platform name="wp7"> <!-- not supported for pluginstall (yet)-->
+  <platform name="wp7">
     <source-file src="src/wp7/Hello.cs"/>
   </platform>
 
