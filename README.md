@@ -2,14 +2,14 @@
 
 Simple plugin that returns your string prefixed with hello.
 
-Gretting a user with "Hello, world" is something that could be done in JavaScript. This plugin provides a simple example demonstrating how Corodva plugins work.
+Gretting a user with "Hello, world" is something that could be done in JavaScript. This plugin provides a simple example demonstrating how Cordova plugins work.
 
 ## Using
 Clone the plugin
 
     $ git clone https://github.com/don/cordova-plugin-hello.git
 
-Create a new Corodva Project
+Create a new Cordova Project
 
     $ cordova create hello com.example.helloapp Hello
     
@@ -36,7 +36,7 @@ Edit `www/js/index.html` and add the following code inside `onDeviceReady`
 Install iOS or Android platform
 
     cordova platform add ios
-    corodva platform add android
+    cordova platform add android
     
 Run the code
 
