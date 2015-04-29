@@ -16,7 +16,7 @@ Create a new Cordova Project
 Install the plugin
 
     $ cd hello
-    $ cordova plugin install ../cordova-plugin-hello
+    $ cordova plugin add ../cordova-plugin-hello
     
 
 Edit `www/js/index.js` and add the following code inside `onDeviceReady`
