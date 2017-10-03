@@ -1,4 +1,4 @@
-package com.example.hello;
+package com.example.payment;
 
 import org.apache.cordova.*;
 import org.json.JSONArray;
