@@ -1,17 +1,7 @@
-repositories {
-    jcenter()
-    maven {
-        url "https://maven.google.com"
-    }
-    flatDir {
-        dirs 'libs'
-    }
-}
-
 dependencies {
-    project(path:':icardpossdk')
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
     compile 'com.android.support:support-v4:25.0.1'
     compile 'com.android.support:gridlayout-v7:25.0.1'
+    project(path:':icardpossdk')
 }
