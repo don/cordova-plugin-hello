@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-        id="com.example.payment"
+        id="cordova-plugin-mypos"
         version="0.1.0">
 
   <name>Hello</name>
@@ -18,7 +18,7 @@
   <platform name="android">
     <config-file target="res/xml/config.xml" parent="/*">
       <feature name="Hello">
-        <param name="android-package" value="com.example.payment.Hello"/>
+        <param name="android-package" value="com.example.plugin.Hello"/>
       </feature>
     </config-file>
 
@@ -28,7 +28,7 @@
       <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     </config-file>
 
-    <source-file src="src/android/Hello.java" target-dir="src/com/example/payment/"/>
+    <source-file src="src/android/Hello.java" target-dir="src/com/example/plugin/"/>
     <resource-file src="src/android/libs/icardpossdk.aar" target-dir="libs"/>
     <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
   </platform>
