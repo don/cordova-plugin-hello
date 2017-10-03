@@ -1,4 +1,4 @@
-package com.mrwinston.mypos;
+package com.example.hello;
 
 import org.apache.cordova.*;
 import org.json.JSONArray;
@@ -6,11 +6,11 @@ import org.json.JSONException;
 
 import java.util.UUID;
 
-import icardpossdk.BluetoothDevicesDialog;
-import icardpossdk.ConnectionListener;
-import icardpossdk.Currency;
-import icardpossdk.POSHandler;
-import icardpossdk.TransactionData;
+import com.example.icardpossdk.BluetoothDevicesDialog;
+import com.example.icardpossdk.ConnectionListener;
+import com.example.icardpossdk.Currency;
+import com.example.icardpossdk.POSHandler;
+import com.example.icardpossdk.TransactionData;
 
 public class Hello extends CordovaPlugin {
     private static final int    REQUEST_CODE_MAKE_PAYMENT  = 1;
@@ -19,6 +19,7 @@ public class Hello extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
+        final CordovaPlugin that = this;
 
         if (action.equals("greet")) {
             POSHandler.setCurrency(Currency.EUR);
@@ -40,7 +41,7 @@ public class Hello extends CordovaPlugin {
 
                             if( POSHandler.getInstance().isConnected()){
                                 mPOSHandler.openPaymentActivity(
-                                        this.cordova.getActivity(),
+                                        that.cordova.getActivity(),
                                         REQUEST_CODE_MAKE_PAYMENT /*requestCode*/,
                                         "12.12",
                                         UUID.randomUUID().toString()
