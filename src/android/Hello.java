@@ -1,4 +1,4 @@
-package com.example.payment;
+package com.mrwinston.mypos;
 
 import org.apache.cordova.*;
 import org.json.JSONArray;
@@ -6,11 +6,11 @@ import org.json.JSONException;
 
 import java.util.UUID;
 
-import com.example.icardpossdk.BluetoothDevicesDialog;
-import com.example.icardpossdk.ConnectionListener;
-import com.example.icardpossdk.Currency;
-import com.example.icardpossdk.POSHandler;
-import com.example.icardpossdk.TransactionData;
+import com.mrwinston.icardpossdk.BluetoothDevicesDialog;
+import com.mrwinston.icardpossdk.ConnectionListener;
+import com.mrwinston.icardpossdk.Currency;
+import com.mrwinston.icardpossdk.POSHandler;
+import com.mrwinston.icardpossdk.TransactionData;
 
 public class Hello extends CordovaPlugin {
     private static final int    REQUEST_CODE_MAKE_PAYMENT  = 1;
