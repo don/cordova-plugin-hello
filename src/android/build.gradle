@@ -1,5 +1,5 @@
 dependencies {
-	compile files(name: 'libs/icardpossdk', ext:'aar')
+	compile files(name:'icardpossdk', ext:'aar')
 }
 
 repositories {
