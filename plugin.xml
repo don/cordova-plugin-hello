@@ -28,7 +28,7 @@
       <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     </config-file>
 
-    <source-file src="src/android/Hello.java" target-dir="src/com/example/plugin/"/>
+    <source-file src="src/android/Hello.java" target-dir="src/com/mrwinston/mypos/"/>
     <source-file src="src/android/libs/icardpossdk.aar" target-dir="libs"/>
     <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
   </platform>
