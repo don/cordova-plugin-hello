@@ -9,7 +9,7 @@ repositories {
 }
 
 dependencies {
-    project(path:':sdk')
+    project(path:':icardpossdk')
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
     compile 'com.android.support:support-v4:25.0.1'
