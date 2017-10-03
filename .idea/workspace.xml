@@ -2,8 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5f7df477-5b5e-4c23-8eb8-06db3b78ea99" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugin.xml" afterPath="$PROJECT_DIR$/plugin.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/cordova-plugin-hello.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,7 +44,7 @@
         <entry file="file://$PROJECT_DIR$/src/android/Hello.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="306">
-              <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -200,7 +204,7 @@
       <updated>1507026608555</updated>
       <workItem from="1507026611667" duration="10098000" />
       <workItem from="1507037675196" duration="676000" />
-      <workItem from="1507038368532" duration="476000" />
+      <workItem from="1507038368532" duration="1048000" />
     </task>
     <task id="LOCAL-00001" summary="First try">
       <created>1507031150151</created>
@@ -321,11 +325,18 @@
       <option name="project" value="LOCAL" />
       <updated>1507038552717</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Changed target">
+      <created>1507038853342</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1507038853342</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11250000" />
+    <option name="totallyTimeSpent" value="11822000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
@@ -374,7 +385,8 @@
     <MESSAGE value="eagagsd" />
     <MESSAGE value="Reverted" />
     <MESSAGE value="Reverted some shit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reverted some shit" />
+    <MESSAGE value="Changed target" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed target" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -476,7 +488,7 @@
     <entry file="file://$PROJECT_DIR$/src/android/Hello.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
-          <caret line="18" column="0" lean-forward="true" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding />
         </state>
       </provider>
