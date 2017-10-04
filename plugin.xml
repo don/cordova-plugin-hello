@@ -29,8 +29,6 @@
     </config-file>
 
     <source-file src="src/android/Hello.java" target-dir="src/com/mrwinston/mypos/"/>
-    <resource-file src="src/android/icardpossdk/icardpossdk.aar" target-dir="libs"/>
-    <framework src="src/android/build.gradle" custom="true" type="gradleReference" />
   </platform>
 
   <platform name="ios">
