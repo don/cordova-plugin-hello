@@ -6,11 +6,11 @@ import org.json.JSONException;
 
 import java.util.UUID;
 
-import eu.leupau.icardpossdk.BluetoothDevicesDialog;
-import eu.leupau.icardpossdk.ConnectionListener;
-import eu.leupau.icardpossdk.Currency;
-import eu.leupau.icardpossdk.POSHandler;
-import eu.leupau.icardpossdk.TransactionData;
+import com.mrwinston.icardpossdk.BluetoothDevicesDialog;
+import com.mrwinston.icardpossdk.ConnectionListener;
+import com.mrwinston.icardpossdk.Currency;
+import com.mrwinston.icardpossdk.POSHandler;
+import com.mrwinston.icardpossdk.TransactionData;
 
 public class Hello extends CordovaPlugin {
     private static final int    REQUEST_CODE_MAKE_PAYMENT  = 1;
@@ -19,6 +19,7 @@ public class Hello extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
+
         final CordovaPlugin that = this;
 
         if (action.equals("greet")) {
