@@ -6,11 +6,11 @@ import org.json.JSONException;
 
 import java.util.UUID;
 
-import com.mrwinston.icardpossdk.BluetoothDevicesDialog;
-import com.mrwinston.icardpossdk.ConnectionListener;
-import com.mrwinston.icardpossdk.Currency;
-import com.mrwinston.icardpossdk.POSHandler;
-import com.mrwinston.icardpossdk.TransactionData;
+import eu.leupau.icardpossdk.BluetoothDevicesDialog;
+import eu.leupau.icardpossdk.ConnectionListener;
+import eu.leupau.icardpossdk.Currency;
+import eu.leupau.icardpossdk.POSHandler;
+import eu.leupau.icardpossdk.TransactionData;
 
 public class Hello extends CordovaPlugin {
     private static final int    REQUEST_CODE_MAKE_PAYMENT  = 1;
