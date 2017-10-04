@@ -1,7 +1,15 @@
+apply plugin:'java'
+
+repositories {
+    flatDir {
+        dirs 'icardpossdk'
+    }
+}
+
 dependencies {
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:design:25.0.1'
     compile 'com.android.support:support-v4:25.0.1'
     compile 'com.android.support:gridlayout-v7:25.0.1'
-    project(path:':icardpossdk')
+    compile(name:'icardpossdk', ext:'aar')
 }
