@@ -17,7 +17,9 @@ public class Hello extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
-        return action;
+        callbackContext.success(action);
+
+        return true;
 
         if (action.equals("greet")) {
             POSHandler.setCurrency(Currency.EUR);
