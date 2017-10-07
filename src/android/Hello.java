@@ -17,6 +17,9 @@ import eu.leupau.icardpossdk.POSHandler;
 import eu.leupau.icardpossdk.TransactionData;
 
 public class Hello extends CordovaPlugin {
+    private static final int REQUEST_CODE_MAKE_PAYMENT  = 1;
+    private static final int REQUEST_CODE_MAKE_REFUND   = 2;
+
     @Override
     public boolean execute(String action, final JSONArray data, final CallbackContext callbackContext) throws JSONException {
         if (action.equals("greet")) {
@@ -25,31 +28,35 @@ public class Hello extends CordovaPlugin {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    final BluetoothDevicesDialog dialog = new BluetoothDevicesDialog(activity);
-
-                    dialog.show();
-
                     POSHandler.setCurrency(Currency.EUR);
 
                     final POSHandler mPOSHandler = POSHandler.getInstance();
 
-                    mPOSHandler.setConnectionListener(new ConnectionListener() {
-                        @Override
-                        public void onConnected(final BluetoothDevice device) {
-                            if( POSHandler.getInstance().isConnected()){
-                                mPOSHandler.purchase(
-                                        "12.12",
-                                        UUID.randomUUID().toString() /*transaction reference*/,
-                                        POSHandler.RECEIPT_PRINT_AUTOMATICALLY /*receipt configuration*/
+                    if( POSHandler.getInstance().isConnected()){
+                        mPOSHandler.openPaymentActivity(
+                                activity,
+                                REQUEST_CODE_MAKE_PAYMENT,
+                                "0.12",
+                                UUID.randomUUID().toString() /*transaction reference*/
+                        );
+                    }
+                    else {
+                        final BluetoothDevicesDialog dialog = new BluetoothDevicesDialog(activity);
+
+                        dialog.show();
+
+                        mPOSHandler.setConnectionListener(new ConnectionListener() {
+                            @Override
+                            public void onConnected(final BluetoothDevice device) {
+                                mPOSHandler.openPaymentActivity(
+                                        activity,
+                                        REQUEST_CODE_MAKE_PAYMENT,
+                                        "0.12",
+                                        UUID.randomUUID().toString() /*transaction reference*/
                                 );
                             }
-                            else {
-                                final Toast toast = Toast.makeText(activity, "No terminal connected to this device.", Toast.LENGTH_SHORT);
-
-                                toast.show();
-                            }
-                        }
-                    });
+                        });
+                    }
                 }
             });
 
