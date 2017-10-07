@@ -17,6 +17,8 @@ public class Hello extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
+        return action;
+
         if (action.equals("greet")) {
             POSHandler.setCurrency(Currency.EUR);
             mPOSHandler = POSHandler.getInstance();
@@ -42,11 +44,8 @@ public class Hello extends CordovaPlugin {
             callbackContext.success(message);
 
             return true;
-
         } else {
-            
             return false;
-
         }
     }
 }
