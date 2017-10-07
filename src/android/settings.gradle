@@ -1,3 +1,1 @@
 include ':icardpossdk'
-
-project(':icardpossdk').projectDir = new File('icardpossdk')

@@ -15,10 +15,6 @@ import com.mrwinston.icardpossdk.TransactionData;
 public class Hello extends CordovaPlugin {
     private POSHandler mPOSHandler;
 
-    public static void main (String[] args) {
-
-    }
-
     @Override
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) throws JSONException {
         callbackContext.success(action);
