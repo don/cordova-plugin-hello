@@ -1,0 +1,9 @@
+dependencies {
+    compile (name: 'icardpossdk', ext:'aar')
+}
+
+repositories {
+    flatDir{
+        dirs 'libs'
+    }
+}
