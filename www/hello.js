@@ -2,6 +2,6 @@
 
 module.exports = {
     payment: function (amount, successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, "Hello", "greet", [amount]);
+        cordova.exec(successCallback, errorCallback, "myPOS", "payment", [amount]);
     }
 };

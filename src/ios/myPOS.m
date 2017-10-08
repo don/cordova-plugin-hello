@@ -1,10 +1,9 @@
-#import "HWPHello.h"
+#import "myPOS.h"
 
-@implementation HWPHello
+@implementation myPOS
 
-- (void)greet:(CDVInvokedUrlCommand*)command
+- (void)payment:(CDVInvokedUrlCommand*)command
 {
-
     NSString* name = [[command arguments] objectAtIndex:0];
     NSString* msg = [NSString stringWithFormat: @"Hello, %@", name];
 
