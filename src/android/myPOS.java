@@ -63,8 +63,6 @@ public class myPOS extends CordovaPlugin {
 
             return true;
         } else {
-            callbackContext.error();
-
             return false;
         }
     }
