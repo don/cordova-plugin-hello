@@ -34,18 +34,6 @@ public class myPOS extends CordovaPlugin {
 
             final POSHandler mPOSHandler = POSHandler.getInstance();
 
-            mPOSHandler.setPOSInfoListener(new POSInfoListener() {
-                @Override
-                public void onPOSInfoReceived(int i, int i1, String s) {
-                    callbackContext.success();
-                }
-
-                @Override
-                public void onTransactionComplete(TransactionData transactionData) {
-                    callbackContext.success();
-                }
-            });
-
             cordova.setActivityResultCallback(myPOS.this);
 
             activity.runOnUiThread(new Runnable() {
