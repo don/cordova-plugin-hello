@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import eu.leupau.icardpossdk.BluetoothDevicesDialog;
 import eu.leupau.icardpossdk.ConnectionListener;
@@ -47,12 +48,25 @@ public class myPOS extends CordovaPlugin {
                         mPOSHandler.setConnectionListener(new ConnectionListener() {
                             @Override
                             public void onConnected(final BluetoothDevice device) {
-                                mPOSHandler.openPaymentActivity(
-                                        activity,
-                                        REQUEST_CODE_MAKE_PAYMENT,
-                                        data.optString(0),
-                                        UUID.randomUUID().toString()
-                                );
+                                try {
+                                    TimeUnit.MILLISECONDS.sleep(100);
+
+                                    activity.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            mPOSHandler.openPaymentActivity(
+                                                    activity,
+                                                    REQUEST_CODE_MAKE_PAYMENT,
+                                                    data.optString(0),
+                                                    UUID.randomUUID().toString()
+                                            );
+                                        }
+                                    });
+                                }
+                                catch (Exception e) {
+
+                                }
                             }
                         });
                     }
