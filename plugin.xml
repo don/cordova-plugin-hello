@@ -28,11 +28,11 @@
             <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
         </config-file>
 
-        <framework src="com.android.support:appcompat-v7:25.1.0"/>
-        <framework src="com.android.support:design:25.1.0"/>
-        <framework src="com.android.support:gridlayout-v7:23.1.1"/>
-        <framework src="com.android.support:support-v4:25.0.1"/>
-        <framework src="com.android.support:cardview-v7:25.0.1"/>
+        <framework src="com.android.support:support-v4:+"/>
+        <framework src="com.android.support:appcompat-v7:+"/>
+        <framework src="com.android.support:design:+"/>
+        <framework src="com.android.support:cardview-v7:+"/>
+        <framework src="com.android.support:gridlayout-v7:+"/>
 
         <source-file src="src/android/myPOS.java" target-dir="src/com/mrwinston/mypos/"/>
         <source-file src="src/android/icardpossdk/build-extras.gradle" target-dir="." />
