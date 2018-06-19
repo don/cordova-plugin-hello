@@ -22,7 +22,7 @@
     "cordova-android"
   ],
   "author": "Don Coleman",
-  "license": "MIT",
+  "license": "Apache-2",
   "bugs": {
     "url": "https://github.com/don/cordova-plugin-hello/issues"
   },
