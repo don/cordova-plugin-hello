@@ -44,7 +44,6 @@ public class myPOS extends CordovaPlugin {
             final Activity activity = this.cordova.getActivity();
             final Context context = activity.getApplicationContext();
 
-            POSHandler.setConnectionType(ConnectionType.USB);
             POSHandler.setLanguage(Language.ENGLISH);
             POSHandler.setCurrency(Currency.EUR);
             POSHandler.setApplicationContext(context);
@@ -59,17 +58,21 @@ public class myPOS extends CordovaPlugin {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    POSHandler.setConnectionType(ConnectionType.USB);
+
                     mPOSHandler = POSHandler.getInstance();
 
                     mPOSHandler.connectDevice(activity);
 
-                    if( mPOSHandler.isConnected()){
-                        mPOSHandler.openPaymentActivity(
-                                activity,
-                                REQUEST_CODE_MAKE_PAYMENT,
-                                data.optString(0),
-                                UUID.randomUUID().toString()
-                        );
+                    mPOSHandler.openPaymentActivity(
+                            activity,
+                            REQUEST_CODE_MAKE_PAYMENT,
+                            data.optString(0),
+                            UUID.randomUUID().toString()
+                    );
+
+                    if( mPOSHandler.isConnected()) {
+                        // Bluetooth
                     }
                     else {
                         mPOSHandler.setConnectionListener(new ConnectionListener() {
