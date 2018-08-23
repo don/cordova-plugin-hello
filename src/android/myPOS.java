@@ -1,8 +1,12 @@
 package com.mrwinston.mypos;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.content.ContextCompat;
 
 import org.apache.cordova.*;
 import org.json.JSONArray;
@@ -23,6 +27,11 @@ import static android.app.Activity.RESULT_OK;
 
 public class myPOS extends CordovaPlugin {
     private static final int REQUEST_CODE_MAKE_PAYMENT = 1;
+    private static final int REQUEST_CODE_MAKE_REFUND = 2;
+
+    private static final int PERMISSION_COARSE_LOCATION = 1;
+
+    private POSHandler mPOSHandler;
 
     private CallbackContext callbackContext = null;
 
@@ -39,12 +48,16 @@ public class myPOS extends CordovaPlugin {
             POSHandler.setApplicationContext(activity.getApplicationContext());
             POSHandler.setDefaultReceiptConfig(POSHandler.RECEIPT_PRINT_ONLY_MERCHANT_COPY);
 
-            final POSHandler mPOSHandler = POSHandler.getInstance();
+            mPOSHandler = POSHandler.getInstance();
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this,  Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_COARSE_LOCATION);
+            }
 
             mPOSHandler.connectDevice(activity);
 
             cordova.setActivityResultCallback(myPOS.this);
-            
+
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
