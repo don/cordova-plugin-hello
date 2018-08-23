@@ -63,8 +63,6 @@ public class myPOS extends CordovaPlugin {
 
                     mPOSHandler.connectDevice(activity);
 
-                    TimeUnit.MILLISECONDS.sleep(100);
-
                     if( mPOSHandler.isConnected()){
                         mPOSHandler.openPaymentActivity(
                                 activity,
