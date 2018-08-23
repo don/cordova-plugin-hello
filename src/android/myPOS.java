@@ -12,7 +12,9 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import eu.leupau.icardpossdk.ConnectionListener;
+import eu.leupau.icardpossdk.ConnectionType;
 import eu.leupau.icardpossdk.Currency;
+import eu.leupau.icardpossdk.Language;
 import eu.leupau.icardpossdk.POSHandler;
 import eu.leupau.icardpossdk.POSInfoListener;
 import eu.leupau.icardpossdk.TransactionData;
