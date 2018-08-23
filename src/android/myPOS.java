@@ -22,7 +22,7 @@ import eu.leupau.icardpossdk.TransactionData;
 import static android.app.Activity.RESULT_OK;
 
 public class myPOS extends CordovaPlugin {
-    private static final int REQUEST_CODE_MAKE_PAYMENT  = 1;
+    private static final int REQUEST_CODE_MAKE_PAYMENT = 1;
 
     private CallbackContext callbackContext = null;
 
@@ -41,8 +41,10 @@ public class myPOS extends CordovaPlugin {
 
             final POSHandler mPOSHandler = POSHandler.getInstance();
 
-            cordova.setActivityResultCallback(myPOS.this);
+            mPOSHandler.connectDevice(activity);
 
+            cordova.setActivityResultCallback(myPOS.this);
+            
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
