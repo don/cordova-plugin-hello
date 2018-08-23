@@ -3,6 +3,7 @@ package com.mrwinston.mypos;
 import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -41,20 +42,21 @@ public class myPOS extends CordovaPlugin {
 
         if (action.equals("payment")) {
             final Activity activity = this.cordova.getActivity();
+            final Context context = activity.getApplicationContext();
 
             POSHandler.setConnectionType(ConnectionType.BLUETOOTH);
             POSHandler.setLanguage(Language.ENGLISH);
             POSHandler.setCurrency(Currency.EUR);
-            POSHandler.setApplicationContext(activity.getApplicationContext());
+            POSHandler.setApplicationContext(context);
             POSHandler.setDefaultReceiptConfig(POSHandler.RECEIPT_PRINT_ONLY_MERCHANT_COPY);
 
             mPOSHandler = POSHandler.getInstance();
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(this,  Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_COARSE_LOCATION);
-            }
+            // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(context,  Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            //     requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_COARSE_LOCATION);
+            // }
 
-            mPOSHandler.connectDevice(activity);
+            mPOSHandler.connectDevice(context);
 
             cordova.setActivityResultCallback(myPOS.this);
 
