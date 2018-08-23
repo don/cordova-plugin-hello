@@ -50,19 +50,21 @@ public class myPOS extends CordovaPlugin {
             POSHandler.setApplicationContext(context);
             POSHandler.setDefaultReceiptConfig(POSHandler.RECEIPT_PRINT_ONLY_MERCHANT_COPY);
 
-            mPOSHandler = POSHandler.getInstance();
-
             // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(context,  Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             //     requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_COARSE_LOCATION);
             // }
 
-            mPOSHandler.connectDevice(context);
+            
 
             cordova.setActivityResultCallback(myPOS.this);
 
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    mPOSHandler = POSHandler.getInstance();
+
+                    mPOSHandler.connectDevice(activity);
+
                     if( mPOSHandler.isConnected()){
                         mPOSHandler.openPaymentActivity(
                                 activity,
