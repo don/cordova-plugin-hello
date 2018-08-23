@@ -36,6 +36,7 @@ public class myPOS extends CordovaPlugin {
             POSHandler.setConnectionType(ConnectionType.BLUETOOTH);
             POSHandler.setLanguage(Language.ENGLISH);
             POSHandler.setCurrency(Currency.EUR);
+            POSHandler.setApplicationContext(activity.getApplicationContext());
             POSHandler.setDefaultReceiptConfig(POSHandler.RECEIPT_PRINT_ONLY_MERCHANT_COPY);
 
             final POSHandler mPOSHandler = POSHandler.getInstance();
