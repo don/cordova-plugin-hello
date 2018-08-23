@@ -11,7 +11,6 @@ import org.json.JSONException;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import eu.leupau.icardpossdk.BluetoothDevicesDialog;
 import eu.leupau.icardpossdk.ConnectionListener;
 import eu.leupau.icardpossdk.Currency;
 import eu.leupau.icardpossdk.POSHandler;
@@ -32,6 +31,11 @@ public class myPOS extends CordovaPlugin {
         if (action.equals("payment")) {
             final Activity activity = this.cordova.getActivity();
 
+            POSHandler.setConnectionType(ConnectionType.BLUETOOTH);
+            POSHandler.setLanguage(Language.DUTCH);
+            POSHandler.setCurrency(Currency.EUR);
+            POSHandler.setDefaultReceiptConfig(POSHandler.RECEIPT_PRINT_ONLY_MERCHANT_COPY);
+
             final POSHandler mPOSHandler = POSHandler.getInstance();
 
             cordova.setActivityResultCallback(myPOS.this);
@@ -39,10 +43,7 @@ public class myPOS extends CordovaPlugin {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    POSHandler.setCurrency(Currency.EUR);
-                    POSHandler.setDefaultReceiptConfig(POSHandler.RECEIPT_PRINT_ONLY_MERCHANT_COPY);
-
-                    if( POSHandler.getInstance().isConnected()){
+                    if( mPOSHandler.isConnected()){
                         mPOSHandler.openPaymentActivity(
                                 activity,
                                 REQUEST_CODE_MAKE_PAYMENT,
@@ -51,10 +52,6 @@ public class myPOS extends CordovaPlugin {
                         );
                     }
                     else {
-                        final BluetoothDevicesDialog dialog = new BluetoothDevicesDialog(activity);
-
-                        dialog.show();
-
                         mPOSHandler.setConnectionListener(new ConnectionListener() {
                             @Override
                             public void onConnected(final BluetoothDevice device) {
