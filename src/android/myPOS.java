@@ -44,7 +44,7 @@ public class myPOS extends CordovaPlugin {
             final Activity activity = this.cordova.getActivity();
             final Context context = activity.getApplicationContext();
 
-            POSHandler.setConnectionType(ConnectionType.BLUETOOTH);
+            POSHandler.setConnectionType(ConnectionType.USB);
             POSHandler.setLanguage(Language.ENGLISH);
             POSHandler.setCurrency(Currency.EUR);
             POSHandler.setApplicationContext(context);
@@ -54,8 +54,6 @@ public class myPOS extends CordovaPlugin {
             //     requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_COARSE_LOCATION);
             // }
 
-            
-
             cordova.setActivityResultCallback(myPOS.this);
 
             activity.runOnUiThread(new Runnable() {
@@ -64,6 +62,8 @@ public class myPOS extends CordovaPlugin {
                     mPOSHandler = POSHandler.getInstance();
 
                     mPOSHandler.connectDevice(activity);
+
+                    TimeUnit.MILLISECONDS.sleep(100);
 
                     if( mPOSHandler.isConnected()){
                         mPOSHandler.openPaymentActivity(
