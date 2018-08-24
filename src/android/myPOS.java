@@ -31,7 +31,7 @@ public class myPOS extends CordovaPlugin {
     private static final int REQUEST_CODE_MAKE_PAYMENT = 1;
     private static final int REQUEST_CODE_MAKE_REFUND = 2;
 
-    private static final int INTERVAL = 50;
+    private static final int INTERVAL = 100;
 
     private Toast mToast;
 
