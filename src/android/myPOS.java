@@ -31,8 +31,6 @@ public class myPOS extends CordovaPlugin {
     private static final int REQUEST_CODE_MAKE_PAYMENT = 1;
     private static final int REQUEST_CODE_MAKE_REFUND = 2;
 
-    private static final int PERMISSION_COARSE_LOCATION = 1;
-
     private Toast mToast;
 
     private POSHandler mPOSHandler;
@@ -45,50 +43,42 @@ public class myPOS extends CordovaPlugin {
 
         if (action.equals("payment")) {
             final Activity activity = this.cordova.getActivity();
-            final Context context = activity.getApplicationContext();
 
-            POSHandler.setLanguage(Language.ENGLISH);
+            POSHandler.setConnectionType(ConnectionType.BLUETOOTH); // BLUETOOTH or USB
+            POSHandler.setLanguage(Language.ENGLISH); // DUTCH not supported yet
             POSHandler.setCurrency(Currency.EUR);
             POSHandler.setApplicationContext(context);
             POSHandler.setDefaultReceiptConfig(POSHandler.RECEIPT_PRINT_ONLY_MERCHANT_COPY);
 
-            // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && ContextCompat.checkSelfPermission(context,  Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            //     requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_COARSE_LOCATION);
-            // }
+            mPOSHandler = POSHandler.getInstance();
 
             cordova.setActivityResultCallback(myPOS.this);
 
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    POSHandler.setConnectionType(ConnectionType.BLUETOOTH);
+            if( mPOSHandler.isConnected() ) {
+                mToast.makeText(activity.getApplicationContext(), "CONNECTED", Toast.LENGTH_SHORT).show();
 
-                    mPOSHandler = POSHandler.getInstance();
-
-                    mToast.makeText(context, String.valueOf(mPOSHandler.isTerminalBusy()), Toast.LENGTH_SHORT).show();
-
-                    if( mPOSHandler.isConnected() ) {
+                // We are already connected, start the payment
+                paymentViaActivity(
+                    activity,
+                    data
+                );
+            }
+            else {
+                // We are not yet connected, listen for connections and attempt to connect
+                mPOSHandler.setConnectionListener(new ConnectionListener() {
+                    @Override
+                    public void onConnected(final BluetoothDevice device) {
                         paymentViaActivity(
                             activity,
                             data
                         );
                     }
-                    else {
-                        mPOSHandler.connectDevice(activity);
+                });
 
-                        mPOSHandler.setConnectionListener(new ConnectionListener() {
-                            @Override
-                            public void onConnected(final BluetoothDevice device) {
-                                paymentViaActivity(
-                                    activity,
-                                    data
-                                );
-                            }
-                        });
-                    }
-                }
-            });
+                mPOSHandler.connectDevice(activity);
+            }
 
+            // Create a result and make sure the onActivityResult callback is available
             PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
 
             result.setKeepCallback(true);
@@ -109,9 +99,13 @@ public class myPOS extends CordovaPlugin {
         }
     }
 
-    private void paymentViaActivity(final Activity activity, final JSONArray data) {
+    private void paymentViaActivity(final Activity activity, final JSONArray data, int i) {
+        final Context context = activity.getApplicationContext();
+
+        mToast.makeText(context, String.valueOf(mPOSHandler.isTerminalBusy()), Toast.LENGTH_SHORT).show();
+
         try { 
-            TimeUnit.MILLISECONDS.sleep(100);
+            TimeUnit.MILLISECONDS.sleep(50);
 
             if (mPOSHandler.isTerminalBusy()) {
                 paymentViaActivity(
@@ -134,7 +128,7 @@ public class myPOS extends CordovaPlugin {
             }
         }
         catch (Exception e) {
-            mToast.makeText(activity.getApplicationContext(), String.valueOf(e), Toast.LENGTH_LONG).show();
+            mToast.makeText(context, String.valueOf(e), Toast.LENGTH_LONG).show();
         }
     }
 }
