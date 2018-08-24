@@ -111,7 +111,7 @@ public class myPOS extends CordovaPlugin {
             if (mPOSHandler.isTerminalBusy()) {
                 paymentViaActivity(
                     activity,
-                    data,
+                    data
                     // ms++
                 );
             }
