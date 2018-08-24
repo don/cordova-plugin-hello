@@ -15,7 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 import eu.leupau.icardpossdk.ConnectionListener;
 import eu.leupau.icardpossdk.ConnectionType;
