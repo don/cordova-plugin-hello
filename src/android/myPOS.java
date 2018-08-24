@@ -63,13 +63,17 @@ public class myPOS extends CordovaPlugin {
             });
 
             if( mPOSHandler.isConnected() ) {
-                mToast.makeText(context, "CONNECTED", Toast.LENGTH_SHORT).show();
-
-                // We are already connected, start the payment
-                paymentViaActivity(
-                    activity,
-                    data
-                );
+                // We are already connected, try starting the payment on a different Thread
+                Thread thread = new Thread(new Runnable(){
+                    public void run(){
+                        paymentViaActivity(
+                            activity,
+                            data
+                        );
+                    }
+                });
+    
+                thread.start();
             }
             else {
                 // We are not yet connected, listen for connections and attempt to connect
@@ -120,17 +124,12 @@ public class myPOS extends CordovaPlugin {
                 );
             }
             else {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPOSHandler.openPaymentActivity(
-                            activity,
-                            REQUEST_CODE_MAKE_PAYMENT,
-                            data.optString(0),
-                            UUID.randomUUID().toString()
-                        );
-                    }
-                });
+                mPOSHandler.openPaymentActivity(
+                    activity,
+                    REQUEST_CODE_MAKE_PAYMENT,
+                    data.optString(0),
+                    UUID.randomUUID().toString()
+                );
             }
         }
         catch (final Exception e) {
