@@ -65,12 +65,12 @@ public class myPOS extends CordovaPlugin {
                 );
             }
             else {
-                // activity.runOnUiThread(new Runnable() {
-                //     @Override
-                //     public void run() {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
                         mPOSHandler.connectDevice(activity);
-                //     }
-                // });
+                    }
+                });
 
                 // We are not yet connected, listen for connections and attempt to connect
                 mPOSHandler.setConnectionListener(new ConnectionListener() {
@@ -120,16 +120,11 @@ public class myPOS extends CordovaPlugin {
     }
 
     private void paymentViaActivity(final Activity activity, final JSONArray data, int ms) {
-        if (ms <= 10000) {
-            try {
-                TimeUnit.MILLISECONDS.sleep(INTERVAL);
-            }
-            catch (InterruptedException e) {
-                // Do nothing, not sure why we throw here anyway
-            }
-    
+        if (ms <= 12000) {
             try {
                 if (mPOSHandler.isTerminalBusy()) {
+                    TimeUnit.MILLISECONDS.sleep(INTERVAL);
+
                     paymentViaActivity(
                         activity,
                         data,
@@ -145,7 +140,11 @@ public class myPOS extends CordovaPlugin {
                     );
                 }
             }
-            catch (final Exception e) {
+            catch (InterruptedException e) {
+                // Do nothing with InterruptedExceptions, for some reason
+            }
+            catch (Exception e) {
+                // Toast all others
                 toast(activity, String.valueOf(e));
             }
         }
