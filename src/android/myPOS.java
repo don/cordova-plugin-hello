@@ -55,6 +55,13 @@ public class myPOS extends CordovaPlugin {
 
             cordova.setActivityResultCallback(myPOS.this);
 
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mToast.makeText(context, String.valueOf(POSHandler.isConnected()), Toast.LENGTH_LONG).show();
+                }
+            });
+
             if( mPOSHandler.isConnected() ) {
                 mToast.makeText(context, "CONNECTED", Toast.LENGTH_SHORT).show();
 
@@ -90,6 +97,7 @@ public class myPOS extends CordovaPlugin {
         return false;
     }
 
+    // TODO: implement onPOSTransactionComplete
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if( requestCode == REQUEST_CODE_MAKE_PAYMENT && resultCode == RESULT_OK) {
@@ -126,11 +134,11 @@ public class myPOS extends CordovaPlugin {
             }
         }
         catch (final Exception e) {
-            final Context context = activity.getApplicationContext();
-
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
+                    Context context = activity.getApplicationContext();
+
                     mToast.makeText(context, String.valueOf(e), Toast.LENGTH_LONG).show();
                 }
             });
