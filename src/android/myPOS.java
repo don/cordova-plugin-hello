@@ -67,7 +67,7 @@ public class myPOS extends CordovaPlugin {
 
                     mPOSHandler.connectDevice(activity);
 
-                    mToast.setText(context, "TEST").show();
+                    mToast.makeText(context, "TEST", Toast.LENGTH_SHORT).show();
 
                     if( mPOSHandler.isConnected()) {
                         mPOSHandler.openPaymentActivity(
