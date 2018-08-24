@@ -125,7 +125,7 @@ public class myPOS extends CordovaPlugin {
                 });
             }
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             final Context context = activity.getApplicationContext();
 
             activity.runOnUiThread(new Runnable() {
