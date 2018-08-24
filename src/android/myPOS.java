@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
+import android.widget.Toast;
 
 import org.apache.cordova.*;
 import org.json.JSONArray;
@@ -31,6 +32,8 @@ public class myPOS extends CordovaPlugin {
     private static final int REQUEST_CODE_MAKE_REFUND = 2;
 
     private static final int PERMISSION_COARSE_LOCATION = 1;
+
+    private Toast mToast;
 
     private POSHandler mPOSHandler;
 
@@ -58,21 +61,22 @@ public class myPOS extends CordovaPlugin {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    POSHandler.setConnectionType(ConnectionType.USB);
+                    POSHandler.setConnectionType(ConnectionType.BLUETOOTH);
 
                     mPOSHandler = POSHandler.getInstance();
 
                     mPOSHandler.connectDevice(activity);
 
-                    mPOSHandler.openPaymentActivity(
+                    mToast.setText("TEST");
+                    mToast.show();
+
+                    if( mPOSHandler.isConnected()) {
+                        mPOSHandler.openPaymentActivity(
                             activity,
                             REQUEST_CODE_MAKE_PAYMENT,
                             data.optString(0),
                             UUID.randomUUID().toString()
-                    );
-
-                    if( mPOSHandler.isConnected()) {
-                        // Bluetooth
+                        );
                     }
                     else {
                         mPOSHandler.setConnectionListener(new ConnectionListener() {
