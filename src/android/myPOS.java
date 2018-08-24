@@ -112,7 +112,7 @@ public class myPOS extends CordovaPlugin {
                 paymentViaActivity(
                     activity,
                     data
-                )
+                );
             }
         });
 
@@ -120,7 +120,7 @@ public class myPOS extends CordovaPlugin {
     }
 
     private void paymentViaActivity(final Activity activity, final JSONArray data, int ms) {
-        if (ms < 10000) {
+        if (ms <= 10000) {
             TimeUnit.MILLISECONDS.sleep(INTERVAL);
     
             try {
@@ -161,7 +161,11 @@ public class myPOS extends CordovaPlugin {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mToast.makeText(activity.getApplicationContext(), message Toast.LENGTH_SHORT).show();
+                mToast.makeText(
+                    activity.getApplicationContext(),
+                    message,
+                    Toast.LENGTH_SHORT
+                ).show();
             }
         });
     }
