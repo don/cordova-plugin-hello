@@ -65,11 +65,9 @@ public class myPOS extends CordovaPlugin {
 
                     mPOSHandler = POSHandler.getInstance();
 
-                    mPOSHandler.connectDevice(activity);
+                    mToast.makeText(context, mPOSHandler.isConnected(), Toast.LENGTH_SHORT).show();
 
-                    mToast.makeText(context, "TEST", Toast.LENGTH_SHORT).show();
-
-                    if( mPOSHandler.isConnected()) {
+                    if( mPOSHandler.isConnected() ) {
                         mPOSHandler.openPaymentActivity(
                             activity,
                             REQUEST_CODE_MAKE_PAYMENT,
@@ -78,11 +76,13 @@ public class myPOS extends CordovaPlugin {
                         );
                     }
                     else {
+                        mPOSHandler.connectDevice(activity);
+
                         mPOSHandler.setConnectionListener(new ConnectionListener() {
                             @Override
                             public void onConnected(final BluetoothDevice device) {
                                 try {
-                                    TimeUnit.MILLISECONDS.sleep(100);
+                                    // TimeUnit.MILLISECONDS.sleep(100);
 
                                     activity.runOnUiThread(new Runnable() {
                                         @Override
