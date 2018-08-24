@@ -76,6 +76,13 @@ public class myPOS extends CordovaPlugin {
                 thread.start();
             }
             else {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPOSHandler.connectDevice(activity);
+                    }
+                });
+
                 // We are not yet connected, listen for connections and attempt to connect
                 mPOSHandler.setConnectionListener(new ConnectionListener() {
                     @Override
@@ -86,8 +93,6 @@ public class myPOS extends CordovaPlugin {
                         );
                     }
                 });
-
-                mPOSHandler.connectDevice(activity);
             }
 
             // Create a result and make sure the onActivityResult callback is available
