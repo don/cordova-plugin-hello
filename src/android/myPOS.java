@@ -121,7 +121,7 @@ public class myPOS extends CordovaPlugin {
 
     private void paymentViaActivity(final Activity activity, final JSONArray data, int ms) {
         if (ms <= 10000) {
-            TimeUnit.MILLISECONDS.sleep(INTERVAL);
+            Thread.sleep(INTERVAL);
     
             try {
                 if (mPOSHandler.isTerminalBusy()) {
