@@ -109,7 +109,7 @@ public class myPOS extends CordovaPlugin {
         }
     }
 
-    private void paymentViaActivity(Activity activity, JSONArray data) {
+    private void paymentViaActivity(final Activity activity, final JSONArray data) {
         try { 
             TimeUnit.MILLISECONDS.sleep(100);
 
