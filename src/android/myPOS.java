@@ -55,8 +55,6 @@ public class myPOS extends CordovaPlugin {
 
             mPOSHandler = POSHandler.getInstance();
 
-            cordova.setActivityResultCallback(myPOS.this);
-
             if( mPOSHandler.isConnected() ) {
                 // We are already connected, start the payment
                 paymentViaActivityThread(
@@ -65,13 +63,6 @@ public class myPOS extends CordovaPlugin {
                 );
             }
             else {
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPOSHandler.connectDevice(activity);
-                    }
-                });
-
                 // We are not yet connected, listen for connections and attempt to connect
                 mPOSHandler.setConnectionListener(new ConnectionListener() {
                     @Override
@@ -82,7 +73,18 @@ public class myPOS extends CordovaPlugin {
                         );
                     }
                 });
+
+                // Needs to run on UI thread, otherwise it won't be closed
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPOSHandler.connectDevice(activity);
+                    }
+                });
             }
+
+            // Set the callback for the activity result to this class
+            cordova.setActivityResultCallback(myPOS.this);
 
             // Create a result and make sure the onActivityResult callback is available
             PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
