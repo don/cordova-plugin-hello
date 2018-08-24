@@ -119,9 +119,14 @@ public class myPOS extends CordovaPlugin {
         thread.start();
     }
 
-    private void paymentViaActivity(final Activity activity, final JSONArray data, int ms) throws InterruptedException {
+    private void paymentViaActivity(final Activity activity, final JSONArray data, int ms) {
         if (ms <= 10000) {
-            TimeUnit.MILLISECONDS.sleep(INTERVAL);
+            try {
+                TimeUnit.MILLISECONDS.sleep(INTERVAL);
+            }
+            catch (InterruptedException e) {
+                // Do nothing, not sure why we throw here anyway
+            }
     
             try {
                 if (mPOSHandler.isTerminalBusy()) {
