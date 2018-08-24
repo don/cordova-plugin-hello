@@ -56,7 +56,7 @@ public class myPOS extends CordovaPlugin {
             cordova.setActivityResultCallback(myPOS.this);
 
             if( mPOSHandler.isConnected() ) {
-                mToast.makeText(activity.getApplicationContext(), "CONNECTED", Toast.LENGTH_SHORT).show();
+                mToast.makeText(context, "CONNECTED", Toast.LENGTH_SHORT).show();
 
                 // We are already connected, start the payment
                 paymentViaActivity(
@@ -101,10 +101,6 @@ public class myPOS extends CordovaPlugin {
     }
 
     private void paymentViaActivity(final Activity activity, final JSONArray data) { //, int ms
-        final Context context = activity.getApplicationContext();
-
-        mToast.makeText(context, String.valueOf(mPOSHandler.isTerminalBusy()), Toast.LENGTH_SHORT).show();
-
         try { 
             TimeUnit.MILLISECONDS.sleep(50);
 
@@ -130,7 +126,14 @@ public class myPOS extends CordovaPlugin {
             }
         }
         catch (Exception e) {
-            mToast.makeText(context, String.valueOf(e), Toast.LENGTH_LONG).show();
+            final Context context = activity.getApplicationContext();
+
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mToast.makeText(context, String.valueOf(e), Toast.LENGTH_LONG).show();
+                }
+            });
         }
     }
 
