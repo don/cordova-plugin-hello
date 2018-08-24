@@ -65,14 +65,12 @@ public class myPOS extends CordovaPlugin {
 
                     mPOSHandler = POSHandler.getInstance();
 
-                    mToast.makeText(context, String.valueOf(mPOSHandler.isConnected()), Toast.LENGTH_SHORT).show();
+                    mToast.makeText(context, String.valueOf(mPOSHandler.isTerminalBusy()), Toast.LENGTH_SHORT).show();
 
                     if( mPOSHandler.isConnected() ) {
-                        mPOSHandler.openPaymentActivity(
+                        paymentViaActivity(
                             activity,
-                            REQUEST_CODE_MAKE_PAYMENT,
-                            data.optString(0),
-                            UUID.randomUUID().toString()
+                            data
                         );
                     }
                     else {
@@ -81,24 +79,10 @@ public class myPOS extends CordovaPlugin {
                         mPOSHandler.setConnectionListener(new ConnectionListener() {
                             @Override
                             public void onConnected(final BluetoothDevice device) {
-                                try {
-                                    // TimeUnit.MILLISECONDS.sleep(100);
-
-                                    activity.runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            mPOSHandler.openPaymentActivity(
-                                                    activity,
-                                                    REQUEST_CODE_MAKE_PAYMENT,
-                                                    data.optString(0),
-                                                    UUID.randomUUID().toString()
-                                            );
-                                        }
-                                    });
-                                }
-                                catch (Exception e) {
-
-                                }
+                                paymentViaActivity(
+                                    activity,
+                                    data
+                                );
                             }
                         });
                     }
@@ -122,6 +106,35 @@ public class myPOS extends CordovaPlugin {
         }
         else {
             callbackContext.error(0);
+        }
+    }
+
+    private void paymentViaActivity(Activity activity, JSONArray data) {
+        try { 
+            TimeUnit.MILLISECONDS.sleep(100);
+            
+            if (mPOSHandler.isTerminalBusy()) {
+                paymentViaActivity(
+                    activity,
+                    data
+                );
+            }
+            else {
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPOSHandler.openPaymentActivity(
+                            activity,
+                            REQUEST_CODE_MAKE_PAYMENT,
+                            data.optString(0),
+                            UUID.randomUUID().toString()
+                        );
+                    }
+                });
+            }
+        }
+        catch (Exception e) {
+            mToast.makeText(context, String.valueOf(e), Toast.LENGTH_LONG).show();
         }
     }
 }
