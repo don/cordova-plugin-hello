@@ -58,7 +58,7 @@ public class myPOS extends CordovaPlugin {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mToast.makeText(context, String.valueOf(POSHandler.isConnected()), Toast.LENGTH_LONG).show();
+                    mToast.makeText(context, String.valueOf(mPOSHandler.isConnected()), Toast.LENGTH_LONG).show();
                 }
             });
 
