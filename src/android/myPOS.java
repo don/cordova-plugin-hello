@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import eu.leupau.icardpossdk.ConnectionListener;
 import eu.leupau.icardpossdk.ConnectionType;
@@ -118,9 +119,9 @@ public class myPOS extends CordovaPlugin {
         thread.start();
     }
 
-    private void paymentViaActivity(final Activity activity, final JSONArray data, int ms) {
+    private void paymentViaActivity(final Activity activity, final JSONArray data, int ms) throws InterruptedException {
         if (ms <= 10000) {
-            Thread.sleep(INTERVAL);
+            TimeUnit.MILLISECONDS.sleep(INTERVAL);
     
             try {
                 if (mPOSHandler.isTerminalBusy()) {
