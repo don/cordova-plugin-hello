@@ -48,7 +48,7 @@ public class myPOS extends CordovaPlugin {
             final Context context = activity.getApplicationContext();
             final ConnectionType connectionType = data.optString(1).equals("USB") ? ConnectionType.USB : ConnectionType.BLUETOOTH;
             
-            POSHandler.setConnectionType(ConnectionType()); // BLUETOOTH or USB
+            POSHandler.setConnectionType(connectionType); // BLUETOOTH or USB
             POSHandler.setLanguage(Language.ENGLISH); // DUTCH not supported yet
             POSHandler.setCurrency(Currency.EUR);
             POSHandler.setApplicationContext(context);
