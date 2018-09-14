@@ -10,9 +10,8 @@ import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.widget.Toast;
 
+import org.json.*;
 import org.apache.cordova.*;
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -102,7 +101,7 @@ public class myPOS extends CordovaPlugin {
                 public void onTransactionComplete(final TransactionData transactionData) {
                     activity.runOnUiThread(new Runnable() {
                         public void run() {
-                            callbackContext.success(transactionData);
+                            callbackContext.success(transactionData.toString());
                         }
                     });
                 }
