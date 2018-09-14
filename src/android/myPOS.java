@@ -99,7 +99,7 @@ public class myPOS extends CordovaPlugin {
     private void paymentViaActivityThread(final JSONArray data) {
         Thread thread = new Thread(new Runnable() {
             public void run() {
-                return paymentViaActivity(data);
+                paymentViaActivity(data);
             }
         });
 
@@ -124,8 +124,6 @@ public class myPOS extends CordovaPlugin {
                         data.getString(0),
                         UUID.randomUUID().toString()
                     );
-
-                    return;
                 }
             }
             catch (InterruptedException e) {
@@ -138,8 +136,6 @@ public class myPOS extends CordovaPlugin {
         }
         else {
             toast("Timeout occurred");
-
-            return;
         }
     }
 
