@@ -27,50 +27,43 @@ import eu.leupau.icardpossdk.TransactionData;
 import static android.app.Activity.RESULT_OK;
 
 public class myPOS extends CordovaPlugin {
-    private static final int REQUEST_CODE_MAKE_PAYMENT = 1;
-    private static final int REQUEST_CODE_MAKE_REFUND = 2;
-
-    private static final int INTERVAL = 100;
-
+    private int REQUEST_CODE_MAKE_PAYMENT = 1;
+    private int INTERVAL = 100;
     private Toast mToast;
-
+    private Activity activity;
     private POSHandler mPOSHandler;
-
-    private CallbackContext callbackContext = null;
+    private CallbackContext callbackContext;
 
     @Override
     public boolean execute(String action, final JSONArray data, final CallbackContext callbackContext) throws JSONException {
         this.callbackContext = callbackContext;
 
         if (action.equals("payment")) {
-            final Activity activity = this.cordova.getActivity();
-            final Context context = activity.getApplicationContext();
+            // Set the callback for the activity result to this class
+            cordova.setActivityResultCallback(myPOS.this);
+
+            activity = this.cordova.getActivity();
+            
             final ConnectionType connectionType = data.optString(1).equals("USB") ? ConnectionType.USB : ConnectionType.BLUETOOTH;
             
             POSHandler.setConnectionType(connectionType); // BLUETOOTH or USB
             POSHandler.setLanguage(Language.ENGLISH); // DUTCH not supported yet
             POSHandler.setCurrency(Currency.EUR);
-            POSHandler.setApplicationContext(context);
+            POSHandler.setApplicationContext(activity.getApplicationContext());
             POSHandler.setDefaultReceiptConfig(POSHandler.RECEIPT_PRINT_ONLY_MERCHANT_COPY);
 
             mPOSHandler = POSHandler.getInstance();
 
             if( mPOSHandler.isConnected() ) {
                 // We are already connected, start the payment
-                paymentViaActivityThread(
-                    activity,
-                    data
-                );
+                paymentViaActivityThread(data);
             }
             else {
                 // We are not yet connected, listen for connections and attempt to connect
                 mPOSHandler.setConnectionListener(new ConnectionListener() {
                     @Override
                     public void onConnected(final BluetoothDevice device) {
-                        paymentViaActivityThread(
-                            activity,
-                            data
-                        );
+                        paymentViaActivityThread(data);
                     }
                 });
 
@@ -83,14 +76,6 @@ public class myPOS extends CordovaPlugin {
                 });
             }
 
-            // Set the callback for the activity result to this class
-            cordova.setActivityResultCallback(myPOS.this);
-
-            // Create a result and make sure the onActivityResult callback is available
-            // PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
-
-            // result.setKeepCallback(true);
-
             return true;
         }
 
@@ -99,7 +84,7 @@ public class myPOS extends CordovaPlugin {
 
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        this.cordova.getActivity().runOnUiThread(new Runnable() {
+        activity.runOnUiThread(new Runnable() {
             public void run() {
                 if( requestCode == REQUEST_CODE_MAKE_PAYMENT && resultCode == RESULT_OK) {
                     callbackContext.success();
@@ -111,27 +96,23 @@ public class myPOS extends CordovaPlugin {
         });
     }
 
-    private void paymentViaActivityThread(final Activity activity, final JSONArray data) {
+    private void paymentViaActivityThread(final JSONArray data) {
         Thread thread = new Thread(new Runnable() {
             public void run() {
-                paymentViaActivity(
-                    activity,
-                    data
-                );
+                return paymentViaActivity(data);
             }
         });
 
         thread.start();
     }
 
-    private void paymentViaActivity(final Activity activity, final JSONArray data, int ms) {
+    private void paymentViaActivity(final JSONArray data, int ms) {
         if (ms <= 12000) {
             try {
                 if (mPOSHandler.isTerminalBusy()) {
                     TimeUnit.MILLISECONDS.sleep(INTERVAL);
 
                     paymentViaActivity(
-                        activity,
                         data,
                         ms + INTERVAL
                     );
@@ -143,6 +124,8 @@ public class myPOS extends CordovaPlugin {
                         data.getString(0),
                         UUID.randomUUID().toString()
                     );
+
+                    return;
                 }
             }
             catch (InterruptedException e) {
@@ -150,23 +133,24 @@ public class myPOS extends CordovaPlugin {
             }
             catch (Exception e) {
                 // Toast all others
-                toast(activity, String.valueOf(e));
+                toast(String.valueOf(e));
             }
         }
         else {
-            toast(activity, "Timeout occurred");
+            toast("Timeout occurred");
+
+            return;
         }
     }
 
-    private void paymentViaActivity(final Activity activity, final JSONArray data) {
+    private void paymentViaActivity(final JSONArray data) {
         paymentViaActivity(
-            activity,
             data,
             INTERVAL
         );
     }
 
-    private void toast(final Activity activity, final String message) {
+    private void toast(final String message) {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
