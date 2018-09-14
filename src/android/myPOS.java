@@ -100,7 +100,11 @@ public class myPOS extends CordovaPlugin {
             
                 @Override
                 public void onTransactionComplete(final TransactionData transactionData) {
-                    callbackContext.success();
+                    activity.runOnUiThread(new Runnable() {
+                        public void run() {
+                            callbackContext.success();
+                        }
+                    });
                 }
             });
 
