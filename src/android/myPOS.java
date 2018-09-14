@@ -87,25 +87,26 @@ public class myPOS extends CordovaPlugin {
             cordova.setActivityResultCallback(myPOS.this);
 
             // Create a result and make sure the onActivityResult callback is available
-            PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
+            // PluginResult result = new PluginResult(PluginResult.Status.NO_RESULT);
 
-            result.setKeepCallback(true);
+            // result.setKeepCallback(true);
 
-            mPOSHandler.setPOSInfoListener(new POSInfoListener() {
-                @Override
-                public void onPOSInfoReceived(final int command, final int status, final String description) {
-                    // Handle the response here
-                }
+            // // TODO: implement onPOSTransactionComplete?
+            // mPOSHandler.setPOSInfoListener(new POSInfoListener() {
+            //     @Override
+            //     public void onPOSInfoReceived(final int command, final int status, final String description) {
+            //         // Handle the response here
+            //     }
             
-                @Override
-                public void onTransactionComplete(final TransactionData transactionData) {
-                    activity.runOnUiThread(new Runnable() {
-                        public void run() {
-                            callbackContext.success(transactionData.toString());
-                        }
-                    });
-                }
-            });
+            //     @Override
+            //     public void onTransactionComplete(final TransactionData transactionData) {
+            //         this.cordova.getActivity().runOnUiThread(new Runnable() {
+            //             public void run() {
+            //                 callbackContext.success(transactionData.toString());
+            //             }
+            //         });
+            //     }
+            // });
 
             return true;
         }
@@ -113,16 +114,19 @@ public class myPOS extends CordovaPlugin {
         return false;
     }
 
-    // // TODO: implement onPOSTransactionComplete?
-    // @Override
-    // public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    //     if( requestCode == REQUEST_CODE_MAKE_PAYMENT && resultCode == RESULT_OK) {
-    //         callbackContext.success();
-    //     }
-    //     else {
-    //         callbackContext.error(0);
-    //     }
-    // }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        this.cordova.getActivity().runOnUiThread(new Runnable() {
+            public void run() {
+                if( requestCode == REQUEST_CODE_MAKE_PAYMENT && resultCode == RESULT_OK) {
+                    callbackContext.success();
+                }
+                else {
+                    callbackContext.error(0);
+                }
+            }
+        });
+    }
 
     private void paymentViaActivityThread(final Activity activity, final JSONArray data) {
         Thread thread = new Thread(new Runnable() {
