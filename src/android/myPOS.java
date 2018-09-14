@@ -93,16 +93,16 @@ public class myPOS extends CordovaPlugin {
             result.setKeepCallback(true);
 
             mPOSHandler.setPOSInfoListener(new POSInfoListener() {
-                // @Override
-                // public void onPOSInfoReceived(final int command, final int status, final String description) {
-                //     // Handle the response here
-                // }
+                @Override
+                public void onPOSInfoReceived(final int command, final int status, final String description) {
+                    // Handle the response here
+                }
             
                 @Override
                 public void onTransactionComplete(final TransactionData transactionData) {
                     activity.runOnUiThread(new Runnable() {
                         public void run() {
-                            callbackContext.success();
+                            callbackContext.success(transactionData);
                         }
                     });
                 }
