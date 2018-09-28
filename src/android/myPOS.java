@@ -28,7 +28,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class myPOS extends CordovaPlugin {
     private int REQUEST_CODE_MAKE_PAYMENT = 1;
-    private int INTERVAL = 100;
+    private int INTERVAL = 200;
     private Toast mToast;
     private Activity activity;
     private POSHandler mPOSHandler;
