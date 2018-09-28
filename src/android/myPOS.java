@@ -55,28 +55,27 @@ public class myPOS extends CordovaPlugin {
             cordova.setActivityResultCallback(myPOS.this);
 
             if( mPOSHandler.isConnected() ) {
-                // We are already connected, clear the ConnectionListener
-                mPOSHandler.setConnectionListener(null);
-
                 // We are already connected, start the payment
                 paymentViaActivityThread(data);
             }
             else {
-                // We are not yet connected, listen for connections and attempt to connect	
-                mPOSHandler.setConnectionListener(new ConnectionListener() {	
-                    @Override	
-                    public void onConnected(final BluetoothDevice device) {	
-                        paymentViaActivityThread(data);
+                // We are not yet connected, listen for connections and attempt to connect
+                mPOSHandler.setConnectionListener(new ConnectionListener() {
+                    @Override
+                    public void onConnected(final BluetoothDevice device) {
+                        toast("Connected to PIN terminal, please (re-)start payment!");
                     }
                 });
 
-                // Needs to run on UI thread, otherwise the SDK popup won't be closed
-                activity.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPOSHandler.connectDevice(activity);
-                    }
-                });
+                mPOSHandler.connectDevice(activity);
+
+                // // Needs to run on UI thread, otherwise the SDK popup won't be closed
+                // activity.runOnUiThread(new Runnable() {
+                //     @Override
+                //     public void run() {
+                //         mPOSHandler.connectDevice(activity);
+                //     }
+                // });
             }
 
             return true;
@@ -107,8 +106,6 @@ public class myPOS extends CordovaPlugin {
                     );
                 }
                 else {
-                    TimeUnit.MILLISECONDS.sleep(INTERVAL);
-
                     mPOSHandler.openPaymentActivity(
                         activity,
                         REQUEST_CODE_MAKE_PAYMENT,
