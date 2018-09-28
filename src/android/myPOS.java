@@ -36,14 +36,14 @@ public class myPOS extends CordovaPlugin {
 
     @Override
     public boolean execute(String action, final JSONArray data, final CallbackContext callbackContext) throws JSONException {
-        // Set the callback for the activity result to this class
-        cordova.setActivityResultCallback(myPOS.this);
-
         this.callbackContext = callbackContext;
 
         if (action.equals("payment")) {
             activity = this.cordova.getActivity();
             
+            // Set the callback for the activity result the Cordova activity
+            cordova.setActivityResultCallback(activity.this);
+
             final ConnectionType connectionType = data.optString(1).equals("USB") ? ConnectionType.USB : ConnectionType.BLUETOOTH;
             
             POSHandler.setConnectionType(connectionType); // BLUETOOTH or USB
@@ -83,18 +83,6 @@ public class myPOS extends CordovaPlugin {
     }
 
     private void paymentViaActivityThread(final JSONArray data) {
-        mPOSHandler.setPOSInfoListener(new POSInfoListener() {
-            @Override
-            public void onPOSInfoReceived(final int command, final int status, final String description) {
-                // Handle the response here
-            }
-        
-            @Override
-            public void onTransactionComplete(final TransactionData transactionData) {
-                callbackContext.success();
-            }
-        });
-
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 paymentViaActivity(data);
@@ -144,17 +132,17 @@ public class myPOS extends CordovaPlugin {
         );
     }
 
-    // // TODO: find out why this doesn't work sometimes... or just the first time after switching connection methods?
-    // // TODO: implement mPOSHandler.setPOSInfoListener?
-    // @Override
-    // public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-    //     if( requestCode == REQUEST_CODE_MAKE_PAYMENT && resultCode == RESULT_OK) {
-    //         callbackContext.success();
-    //     }
-    //     else {
-    //         callbackContext.error(resultCode);
-    //     }
-    // }
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        toast("Callback");
+
+        if( requestCode == REQUEST_CODE_MAKE_PAYMENT && resultCode == RESULT_OK) {
+            callbackContext.success();
+        }
+        else {
+            callbackContext.error(resultCode);
+        }
+    }
 
     private void toast(final String message) {
         activity.runOnUiThread(new Runnable() {
