@@ -107,12 +107,17 @@ public class myPOS extends CordovaPlugin {
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            mPOSHandler.openPaymentActivity(
-                                activity,
-                                REQUEST_CODE_MAKE_PAYMENT,
-                                data.getString(0),
-                                UUID.randomUUID().toString()
-                            );
+                            try {
+                                mPOSHandler.openPaymentActivity(
+                                    activity,
+                                    REQUEST_CODE_MAKE_PAYMENT,
+                                    data.getString(0),
+                                    UUID.randomUUID().toString()
+                                );
+                            }
+                            catch(Exception e) {
+                                toast(String.valueOf(e));
+                            }
                         }
                     });
                 }
