@@ -42,7 +42,7 @@ public class myPOS extends CordovaPlugin {
             activity = this.cordova.getActivity();
             
             // Set the callback for the activity result the Cordova activity
-            cordova.setActivityResultCallback(activity.this);
+            this.cordova.setActivityResultCallback(activity);
 
             final ConnectionType connectionType = data.optString(1).equals("USB") ? ConnectionType.USB : ConnectionType.BLUETOOTH;
             
