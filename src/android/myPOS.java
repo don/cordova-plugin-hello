@@ -42,7 +42,7 @@ public class myPOS extends CordovaPlugin {
             activity = cordova.getActivity();
             
             // Set the callback for the activity result the Cordova activity
-            cordova.setActivityResultCallback(activity);
+            cordova.setActivityResultCallback(myPOS.this);
 
             final ConnectionType connectionType = data.optString(1).equals("USB") ? ConnectionType.USB : ConnectionType.BLUETOOTH;
             
@@ -104,12 +104,17 @@ public class myPOS extends CordovaPlugin {
                     );
                 }
                 else {
-                    mPOSHandler.openPaymentActivity(
-                        activity,
-                        REQUEST_CODE_MAKE_PAYMENT,
-                        data.getString(0),
-                        UUID.randomUUID().toString()
-                    );
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mPOSHandler.openPaymentActivity(
+                                activity,
+                                REQUEST_CODE_MAKE_PAYMENT,
+                                data.getString(0),
+                                UUID.randomUUID().toString()
+                            );
+                        }
+                    });
                 }
             }
             catch (InterruptedException e) {
