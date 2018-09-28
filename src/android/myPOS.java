@@ -67,15 +67,13 @@ public class myPOS extends CordovaPlugin {
                     }
                 });
 
-                mPOSHandler.connectDevice(activity);
-
-                // // Needs to run on UI thread, otherwise the SDK popup won't be closed
-                // activity.runOnUiThread(new Runnable() {
-                //     @Override
-                //     public void run() {
-                //         mPOSHandler.connectDevice(activity);
-                //     }
-                // });
+                // Needs to run on UI thread, otherwise the DevicesDialogue won't be closed
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mPOSHandler.connectDevice(activity);
+                    }
+                });
             }
 
             return true;
