@@ -132,6 +132,8 @@ public class myPOS extends CordovaPlugin {
         );
     }
 
+    // TODO: find out why this doesn't work sometimes... or just the first time after switching connection methods?
+    // TODO: implement mPOSHandler.setPOSInfoListener?
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         activity.runOnUiThread(new Runnable() {
