@@ -39,9 +39,6 @@ public class myPOS extends CordovaPlugin {
         this.callbackContext = callbackContext;
 
         if (action.equals("payment")) {
-            // Set the callback for the activity result to this class
-            cordova.setActivityResultCallback(myPOS.this);
-
             activity = this.cordova.getActivity();
             
             final ConnectionType connectionType = data.optString(1).equals("USB") ? ConnectionType.USB : ConnectionType.BLUETOOTH;
@@ -53,21 +50,12 @@ public class myPOS extends CordovaPlugin {
             POSHandler.setDefaultReceiptConfig(POSHandler.RECEIPT_PRINT_ONLY_MERCHANT_COPY);
 
             mPOSHandler = POSHandler.getInstance();
+            
+            // Set the callback for the activity result to this class
+            cordova.setActivityResultCallback(myPOS.this);
 
-            if( mPOSHandler.isConnected() ) {
-                // We are already connected, start the payment
-                paymentViaActivityThread(data);
-            }
-            else {
-                // We are not yet connected, listen for connections and attempt to connect
-                mPOSHandler.setConnectionListener(new ConnectionListener() {
-                    @Override
-                    public void onConnected(final BluetoothDevice device) {
-                        paymentViaActivityThread(data);
-                    }
-                });
-
-                // Needs to run on UI thread, otherwise it won't be closed
+            if( !mPOSHandler.isConnected() ) {
+                // Needs to run on UI thread, otherwise the SDK popup won't be closed
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -75,25 +63,15 @@ public class myPOS extends CordovaPlugin {
                     }
                 });
             }
+            else {
+                // We are already connected, start the payment
+                paymentViaActivityThread(data);
+            }
 
             return true;
         }
 
         return false;
-    }
-
-    @Override
-    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        activity.runOnUiThread(new Runnable() {
-            public void run() {
-                if( requestCode == REQUEST_CODE_MAKE_PAYMENT && resultCode == RESULT_OK) {
-                    callbackContext.success();
-                }
-                else {
-                    callbackContext.error(resultCode);
-                }
-            }
-        });
     }
 
     private void paymentViaActivityThread(final JSONArray data) {
@@ -135,7 +113,7 @@ public class myPOS extends CordovaPlugin {
             }
         }
         else {
-            toast("Timeout occurred");
+            toast("Terminal timeout occurred");
         }
     }
 
@@ -144,6 +122,20 @@ public class myPOS extends CordovaPlugin {
             data,
             INTERVAL
         );
+    }
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                if( requestCode == REQUEST_CODE_MAKE_PAYMENT && resultCode == RESULT_OK) {
+                    callbackContext.success();
+                }
+                else {
+                    callbackContext.error(resultCode);
+                }
+            }
+        });
     }
 
     private void toast(final String message) {
