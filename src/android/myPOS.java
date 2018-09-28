@@ -104,22 +104,12 @@ public class myPOS extends CordovaPlugin {
                     );
                 }
                 else {
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                mPOSHandler.openPaymentActivity(
-                                    activity,
-                                    REQUEST_CODE_MAKE_PAYMENT,
-                                    data.getString(0),
-                                    UUID.randomUUID().toString()
-                                );
-                            }
-                            catch(Exception e) {
-                                toast(String.valueOf(e));
-                            }
-                        }
-                    });
+                    mPOSHandler.openPaymentActivity(
+                        activity,
+                        REQUEST_CODE_MAKE_PAYMENT,
+                        data.getString(0),
+                        UUID.randomUUID().toString()
+                    );
                 }
             }
             catch (InterruptedException e) {
@@ -145,6 +135,8 @@ public class myPOS extends CordovaPlugin {
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         toast("Callback");
+
+        // TODO: find out why callback is called so often, and only callback to the WebView once the transaction is completed or the SDK activity closed
 
         if( requestCode == REQUEST_CODE_MAKE_PAYMENT && resultCode == RESULT_OK) {
             callbackContext.success();
