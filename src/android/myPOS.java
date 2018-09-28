@@ -54,7 +54,22 @@ public class myPOS extends CordovaPlugin {
             // Set the callback for the activity result to this class
             cordova.setActivityResultCallback(myPOS.this);
 
-            if( !mPOSHandler.isConnected() ) {
+            if( mPOSHandler.isConnected() ) {
+                // We are already connected, clear the ConnectionListener
+                mPOSHandler.setConnectionListener(null);
+
+                // We are already connected, start the payment
+                paymentViaActivityThread(data);
+            }
+            else {
+                // We are not yet connected, listen for connections and attempt to connect	
+                mPOSHandler.setConnectionListener(new ConnectionListener() {	
+                    @Override	
+                    public void onConnected(final BluetoothDevice device) {	
+                        paymentViaActivityThread(data);
+                    }
+                });
+
                 // Needs to run on UI thread, otherwise the SDK popup won't be closed
                 activity.runOnUiThread(new Runnable() {
                     @Override
@@ -62,10 +77,6 @@ public class myPOS extends CordovaPlugin {
                         mPOSHandler.connectDevice(activity);
                     }
                 });
-            }
-            else {
-                // We are already connected, start the payment
-                paymentViaActivityThread(data);
             }
 
             return true;
@@ -96,6 +107,8 @@ public class myPOS extends CordovaPlugin {
                     );
                 }
                 else {
+                    TimeUnit.MILLISECONDS.sleep(INTERVAL);
+
                     mPOSHandler.openPaymentActivity(
                         activity,
                         REQUEST_CODE_MAKE_PAYMENT,
