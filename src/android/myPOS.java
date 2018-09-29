@@ -136,8 +136,7 @@ public class myPOS extends CordovaPlugin {
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         toast(String.valueOf(requestCode) + "_" + String.valueOf(resultCode));
 
-        // TODO: find out why callback is called so often, and only callback to the WebView once the transaction is completed or the SDK activity closed
-
+        // requestCode == 1 && resultCode == -1
         if( requestCode == REQUEST_CODE_MAKE_PAYMENT && resultCode == RESULT_OK) {
             callbackContext.success();
         }
