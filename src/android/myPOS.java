@@ -39,11 +39,11 @@ public class myPOS extends CordovaPlugin {
         this.callbackContext = callbackContext;
 
         if (action.equals("payment")) {
-            // Set the callback for the activity result to this class
+            activity = cordova.getActivity();
+            
+            // Set the callback for the activity result the Cordova activity
             cordova.setActivityResultCallback(myPOS.this);
 
-            activity = this.cordova.getActivity();
-            
             final ConnectionType connectionType = data.optString(1).equals("USB") ? ConnectionType.USB : ConnectionType.BLUETOOTH;
             
             POSHandler.setConnectionType(connectionType); // BLUETOOTH or USB
@@ -63,11 +63,11 @@ public class myPOS extends CordovaPlugin {
                 mPOSHandler.setConnectionListener(new ConnectionListener() {
                     @Override
                     public void onConnected(final BluetoothDevice device) {
-                        paymentViaActivityThread(data);
+                        toast("Connected to PIN terminal, please (re-)start payment!");
                     }
                 });
 
-                // Needs to run on UI thread, otherwise it won't be closed
+                // Needs to run on UI thread, otherwise the DevicesDialogue won't be closed
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -80,20 +80,6 @@ public class myPOS extends CordovaPlugin {
         }
 
         return false;
-    }
-
-    @Override
-    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        activity.runOnUiThread(new Runnable() {
-            public void run() {
-                if( requestCode == REQUEST_CODE_MAKE_PAYMENT && resultCode == RESULT_OK) {
-                    callbackContext.success();
-                }
-                else {
-                    callbackContext.error(resultCode);
-                }
-            }
-        });
     }
 
     private void paymentViaActivityThread(final JSONArray data) {
@@ -135,7 +121,7 @@ public class myPOS extends CordovaPlugin {
             }
         }
         else {
-            toast("Timeout occurred");
+            toast("Terminal timeout occurred");
         }
     }
 
@@ -144,6 +130,22 @@ public class myPOS extends CordovaPlugin {
             data,
             INTERVAL
         );
+    }
+
+    @Override
+    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+        // If we have requested to make a payment (requestCode == 1)
+        if( requestCode == REQUEST_CODE_MAKE_PAYMENT) {
+            // And the result is OK (resultCode == -1)
+            if (resultCode == RESULT_OK) {
+                callbackContext.success();
+            }
+            else {
+                // If the result is NOT OK, we remain in the SDK and allow the user to try again (or go back to Mr. Winston, withoutcalling the callback)
+                // TODO: consider whether we want to log errors here somehow (if so, we should probably make use of PluginResult.setKeepCallback)
+                // callbackContext.error(resultCode);
+            }
+        }
     }
 
     private void toast(final String message) {
