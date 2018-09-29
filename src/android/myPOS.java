@@ -28,7 +28,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class myPOS extends CordovaPlugin {
     private int REQUEST_CODE_MAKE_PAYMENT = 1;
-    private int INTERVAL = 200;
+    private int INTERVAL = 100;
     private Toast mToast;
     private Activity activity;
     private POSHandler mPOSHandler;
@@ -134,14 +134,17 @@ public class myPOS extends CordovaPlugin {
 
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-        toast(String.valueOf(requestCode) + "_" + String.valueOf(resultCode));
-
-        // requestCode == 1 && resultCode == -1
-        if( requestCode == REQUEST_CODE_MAKE_PAYMENT && resultCode == RESULT_OK) {
-            callbackContext.success();
-        }
-        else {
-            // callbackContext.error(resultCode);
+        // If we have requested to make a payment (requestCode == 1)
+        if( requestCode == REQUEST_CODE_MAKE_PAYMENT) {
+            // And the result is OK (resultCode == -1)
+            if (resultCode == RESULT_OK) {
+                callbackContext.success();
+            }
+            else {
+                // If the result is NOT OK, we remain in the SDK and allow the user to try again (or go back to Mr. Winston, withoutcalling the callback)
+                // TODO: consider whether we want to log errors here somehow (if so, we should probably make use of PluginResult.setKeepCallback)
+                // callbackContext.error(resultCode);
+            }
         }
     }
 
