@@ -16,13 +16,13 @@ import org.apache.cordova.*;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import eu.leupau.icardpossdk.ConnectionListener;
-import eu.leupau.icardpossdk.ConnectionType;
-import eu.leupau.icardpossdk.Currency;
-import eu.leupau.icardpossdk.Language;
-import eu.leupau.icardpossdk.POSHandler;
-import eu.leupau.icardpossdk.POSInfoListener;
-import eu.leupau.icardpossdk.TransactionData;
+import icardpossdk.ConnectionListener;
+import icardpossdk.ConnectionType;
+import icardpossdk.Currency;
+import icardpossdk.Language;
+import icardpossdk.POSHandler;
+import icardpossdk.POSInfoListener;
+import icardpossdk.TransactionData;
 
 import static android.app.Activity.RESULT_OK;
 
