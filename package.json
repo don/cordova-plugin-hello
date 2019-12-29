@@ -1,0 +1,12 @@
+{
+    "name": "cordova-plugin-mypos",
+    "version": "1.0.0",
+    "cordova": {
+      "id": "cordova-plugin-mypos",
+      "platforms": [
+        "android",
+        "ios"
+      ]
+    }
+  }
+  

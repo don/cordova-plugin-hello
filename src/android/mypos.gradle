@@ -1,0 +1,9 @@
+repositories {
+    flatDir {
+        dirs 'src/main/java/eu/leupau'
+    }
+}
+
+dependencies {
+    compile (name: 'icardpossdk', ext:'aar')
+}
