@@ -24,7 +24,7 @@ Edit `www/js/index.js` and add the following code inside `onDeviceReady`
     }
 
     var failure = function() {
-        alert("Error calling Hello Plugin");
+        alert("Error Calling Hello Plugin");
     }
 
     hello.greet("World", success, failure);
