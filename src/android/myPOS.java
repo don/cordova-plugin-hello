@@ -70,7 +70,12 @@ public class myPOS extends CordovaPlugin {
                 activity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mPOSHandler.connectDevice(activity);
+                        try {
+                            mPOSHandler.connectDevice(activity);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            callbackContext.error("Error with connecting to device: " + e);
+                        }
                     }
                 });
             }
@@ -140,7 +145,7 @@ public class myPOS extends CordovaPlugin {
                 callbackContext.success();
             }
             else {
-                // If the result is NOT OK, we remain in the SDK and allow the user to try again (or go back to Mr. Winston, withoutcalling the callback)
+                // If the result is NOT OK, we remain in the SDK and allow the user to try again (or go back to Mr. Winston, without calling the callback)
                 // TODO: consider whether we want to log errors here somehow (if so, we should probably make use of PluginResult.setKeepCallback)
                 // callbackContext.error(resultCode);
             }
