@@ -37,7 +37,7 @@
         <framework src="com.android.support:gridlayout-v7:27.+"/>
 
         <framework src="src/android/mypos.gradle" custom="true" type="gradleReference"/>
-        <resource-file src="src/android/src/main/java/eu/leupau/icardpossdk.aar" target="java/eu/leupau/icardpossdk.aar" />
+        <resource-file src="src/android/src/main/java/com/slavesdk/slavesdk.aar" target="java/com/slavesdk/slavesdk.aar" />
     </platform>
 
     <platform name="ios">

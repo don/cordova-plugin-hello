@@ -1,9 +1,9 @@
 repositories {
     flatDir {
-        dirs 'src/main/java/eu/leupau'
+        dirs 'src/main/java/com/slavesdk'
     }
 }
 
 dependencies {
-    implementation (name: 'icardpossdk', ext:'aar')
+    implementation (name: 'slavesdk', ext:'aar')
 }
