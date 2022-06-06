@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
-        id="com.example.hello"
-        version="0.7.0">
+        id="cordova-plugin-hello"
+        version="0.7.1">
 
   <name>Hello</name>
 
